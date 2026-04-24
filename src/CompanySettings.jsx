@@ -12,7 +12,7 @@ const DANGER = "#E05252";
 
 const COMMODITY_OPTIONS = ["Gold", "Copper", "Cobalt", "Silver", "Platinum", "Critical Minerals", "Oil", "Natural Gas", "Other"];
 
-export default function CompanySettings({ userId, onSave }) {
+export default function CompanySettings({ userId, workspaceId, onSave }) {
   const [settings, setSettings] = useState({
     company_name: "", company_address: "", company_registration: "",
     company_country: "", signatory_name: "", signatory_title: "",
@@ -28,7 +28,7 @@ export default function CompanySettings({ userId, onSave }) {
   useEffect(() => { loadSettings(); }, [userId]);
 
   async function loadSettings() {
-    const { data } = await supabase.from("company_settings").select("*").eq("user_id", userId).single();
+    const { data } = await supabase.from("company_settings").select("*").eq("workspace_id", workspaceId).single();
     if (data) {
       setSettings(data);
       if (data.logo_url) setLogoPreview(data.logo_url);
