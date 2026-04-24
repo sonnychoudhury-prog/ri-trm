@@ -34,6 +34,11 @@ export default function Admin({ session, onBack }) {
     else loadData();
   }
 
+  async function deleteCorrespondence(id) {
+    await supabase.from("correspondence").delete().eq("id", id);
+    loadData();
+  }
+
   async function deactivateUser(userId) {
     const { error } = await supabase.from("profiles").update({ role: "suspended" }).eq("id", userId);
     if (error) setError(error.message);
@@ -254,6 +259,7 @@ export default function Admin({ session, onBack }) {
                     <th style={th}>User</th>
                     <th style={th}>Date</th>
                     <th style={th}>AI Analysis</th>
+                    <th style={th}>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -265,6 +271,7 @@ export default function Admin({ session, onBack }) {
                       <td style={{ ...td, fontSize: 11 }}>{c.profiles?.email || "—"}</td>
                       <td style={{ ...td, fontSize: 11 }}>{new Date(c.created_at).toLocaleDateString()}</td>
                       <td style={{ ...td, fontSize: 11, maxWidth: 300 }}>{c.ai_analysis ? c.ai_analysis.substring(0, 100) + "..." : "—"}</td>
+                      <td style={td}><button onClick={() => deleteCorrespondence(c.id)} style={{ padding: "3px 10px", background: "transparent", border: "1px solid rgba(224,82,82,0.3)", color: "#E05252", fontFamily: "monospace", fontSize: 9, cursor: "pointer" }}>DELETE</button></td>
                     </tr>
                   ))}
                 </tbody>

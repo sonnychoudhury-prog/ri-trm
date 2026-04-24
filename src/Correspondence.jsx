@@ -21,6 +21,11 @@ export default function Correspondence({ counterpartyId, counterpartyName, userI
 
   useEffect(() => { loadLogs(); }, [counterpartyId]);
 
+  async function deleteLog(id) {
+    await supabase.from("correspondence").delete().eq("id", id);
+    loadLogs();
+  }
+
   async function loadLogs() {
     const { data } = await supabase.from("correspondence").select("*").eq("counterparty_id", counterpartyId).order("created_at", { ascending: false });
     if (data) setLogs(data);
@@ -94,6 +99,7 @@ export default function Correspondence({ counterpartyId, counterpartyName, userI
             <div style={s.logHeader}>
               <span style={s.logSource}>{log.source}</span>
               <span style={s.logDate}>{new Date(log.created_at).toLocaleString()}</span>
+              <button onClick={() => deleteLog(log.id)} style={{ padding: "3px 10px", background: "transparent", border: "1px solid rgba(224,82,82,0.3)", color: "#E05252", fontFamily: "monospace", fontSize: 9, cursor: "pointer", marginLeft: "auto" }}>DELETE</button>
             </div>
             <div style={s.logContent}>{log.content}</div>
             {log.ai_analysis && <div style={s.logAnalysis}>{log.ai_analysis}</div>}
