@@ -7,6 +7,7 @@ import Report from "./Report";
 import Workflow from "./Workflow";
 import Correspondence from "./Correspondence";
 import CompanySettings from "./CompanySettings";
+import Admin from "./Admin";
 
 export default function App() {
   const [session, setSession] = useState(null);
@@ -103,6 +104,10 @@ export default function App() {
 
   if (view === "assessment") return (
     <Assessment onComplete={saveAssessment} onCancel={() => setView("list")} />
+  );
+
+  if (view === "admin" && profile?.role === "admin") return (
+    <Admin session={session} onBack={() => setView("list")} />
   );
 
   if (view === "settings") return (
