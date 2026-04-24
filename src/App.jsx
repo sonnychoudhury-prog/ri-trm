@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { supabase } from "./supabase";
-import { C, GOOGLE_FONTS, PIPELINE_STAGES } from "./theme";
+import { C, GOOGLE_FONTS } from "./theme";
 import Auth from "./Auth";
 import Assessment from "./Assessment";
 import Report from "./Report";
+import Workflow from "./Workflow";
+import Correspondence from "./Correspondence";
+import CompanySettings from "./CompanySettings";
 
 export default function App() {
   const [session, setSession] = useState(null);
@@ -14,6 +17,7 @@ export default function App() {
   const [activeAssessment, setActiveAssessment] = useState(null);
   const [companySettings, setCompanySettings] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [cpView, setCpView] = useState("report");
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -71,7 +75,15 @@ export default function App() {
         return [cpData, ...prev];
       });
     }
-    setView("report");
+    setView("detail");
+    setCpView("report");
+  }
+
+  function openCP(cp) {
+    setActiveCP(cp);
+    setActiveAssessment(null);
+    setView("detail");
+    setCpView("report");
   }
 
   function scoreColor(s) {
@@ -90,40 +102,121 @@ export default function App() {
   );
 
   if (view === "assessment") return (
-    <Assessment
-      onComplete={saveAssessment}
-      onCancel={() => setView("list")}
-    />
+    <Assessment onComplete={saveAssessment} onCancel={() => setView("list")} />
   );
 
-  if (view === "report" && activeAssessment) return (
-    <Report
-      assessment={activeAssessment}
-      onBack={() => setView("list")}
-      onNewAssessment={() => { setActiveAssessment(null); setView("assessment"); }}
-    />
+  if (view === "settings") return (
+    <CompanySettings userId={session.user.id} onSave={(data) => { if (data) setCompanySettings(data); setView("list"); }} />
   );
 
   const hdrBtn = (col) => ({ padding: "7px 14px", background: "transparent", border: `1px solid ${col || C.cyanBorder}`, color: col || C.cyan, fontFamily: C.fontMono, fontSize: 9, letterSpacing: "0.12em", cursor: "pointer" });
+
+  const Header = () => (
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "24px 0 18px", borderBottom: `1px solid ${C.cyanBorder}`, marginBottom: 36 }}>
+      <div style={{ cursor: "pointer" }} onClick={() => setView("list")}>
+        <div style={{ fontFamily: C.fontDisplay, fontSize: 20, fontWeight: 700, color: C.cyanBright, letterSpacing: "0.12em" }}>REVOLUTION INTELL</div>
+        <div style={{ fontFamily: C.fontMono, fontSize: 9, color: C.silverDim, letterSpacing: "0.2em", marginTop: 2 }}>TRM // TRUST & RISK MANAGEMENT PLATFORM v2.0</div>
+      </div>
+      <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+        <span style={{ fontFamily: C.fontMono, fontSize: 9, color: C.silverDim }}>{session.user.email}</span>
+        {profile?.role === "admin" && <button style={hdrBtn(C.cyan)} onClick={() => setView("admin")}>ADMIN</button>}
+        <button style={hdrBtn()} onClick={() => setView("settings")}>SETTINGS</button>
+        <button style={hdrBtn("rgba(224,82,82,0.6)")} onClick={signOut}>SIGN OUT</button>
+      </div>
+    </div>
+  );
+
+  if (view === "detail" && activeCP) {
+    const tabBtn = (tab) => ({
+      padding: "10px 20px", background: cpView === tab ? "rgba(16,157,206,0.15)" : "transparent",
+      border: `1px solid ${cpView === tab ? C.cyan : C.cyanBorder}`,
+      color: cpView === tab ? C.cyan : C.silverDim,
+      fontFamily: C.fontMono, fontSize: 10, letterSpacing: "0.15em", cursor: "pointer"
+    });
+
+    return (
+      <div style={{ background: C.bg, minHeight: "100vh", fontFamily: C.font, color: C.silver }}>
+        <style>{`${GOOGLE_FONTS}*{box-sizing:border-box}@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}`}</style>
+        <div style={{ maxWidth: 960, margin: "0 auto", padding: "0 20px 80px" }}>
+          <Header />
+
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24 }}>
+            <div>
+              <div style={{ fontFamily: C.fontMono, fontSize: 9, color: C.silverDim, letterSpacing: "0.1em", marginBottom: 6, cursor: "pointer" }} onClick={() => setView("list")}>
+                &#8592; ALL COUNTERPARTIES
+              </div>
+              <div style={{ fontFamily: C.fontDisplay, fontSize: 28, fontWeight: 700, color: C.white }}>{activeCP.name}</div>
+              <div style={{ fontFamily: C.fontMono, fontSize: 10, color: C.silverDim, marginTop: 4 }}>
+                {[activeCP.country, activeCP.tx_type, activeCP.tx_value].filter(Boolean).join(" // ")}
+              </div>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+              {activeCP.score && (
+                <div style={{ textAlign: "center" }}>
+                  <div style={{ fontFamily: C.fontDisplay, fontSize: 42, fontWeight: 700, color: scoreColor(activeCP.score), lineHeight: 1 }}>{activeCP.score}</div>
+                  <div style={{ fontFamily: C.fontMono, fontSize: 8, color: C.silverDim, letterSpacing: "0.1em" }}>TRUST SCORE</div>
+                </div>
+              )}
+              <button style={{ padding: "10px 20px", background: "transparent", border: `1px solid ${C.cyan}`, color: C.cyan, fontFamily: C.fontMono, fontSize: 9, letterSpacing: "0.15em", cursor: "pointer" }}
+                onClick={() => setView("assessment")}>
+                NEW ASSESSMENT
+              </button>
+            </div>
+          </div>
+
+          <div style={{ display: "flex", gap: 2, marginBottom: 28 }}>
+            <button style={tabBtn("report")} onClick={() => setCpView("report")}>TRUST REPORT</button>
+            <button style={tabBtn("workflow")} onClick={() => setCpView("workflow")}>DEAL WORKFLOW</button>
+            <button style={tabBtn("correspondence")} onClick={() => setCpView("correspondence")}>CORRESPONDENCE</button>
+          </div>
+
+          {cpView === "report" && (
+            <div>
+              {activeAssessment ? (
+                <Report
+                  assessment={activeAssessment}
+                  onBack={() => setView("list")}
+                  onNewAssessment={() => setView("assessment")}
+                />
+              ) : (
+                <div style={{ background: C.bg2, border: `1px dashed ${C.cyanBorder}`, padding: "60px 40px", textAlign: "center" }}>
+                  <div style={{ fontFamily: C.fontDisplay, fontSize: 20, fontWeight: 600, color: C.white, marginBottom: 8 }}>No Assessment Yet</div>
+                  <div style={{ fontFamily: C.fontMono, fontSize: 10, color: C.silverDim, letterSpacing: "0.1em", marginBottom: 24 }}>RUN A TRUST ASSESSMENT TO GENERATE THE FULL RISK REPORT</div>
+                  <button style={{ padding: "12px 28px", background: "transparent", border: `1px solid ${C.cyan}`, color: C.cyan, fontFamily: C.fontDisplay, fontSize: 14, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}
+                    onClick={() => setView("assessment")}>
+                    RUN ASSESSMENT
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {cpView === "workflow" && (
+            <Workflow
+              counterpartyId={activeCP.id}
+              counterpartyName={activeCP.name}
+              userId={session.user.id}
+              counterparty={activeCP}
+            />
+          )}
+
+          {cpView === "correspondence" && (
+            <Correspondence
+              counterpartyId={activeCP.id}
+              counterpartyName={activeCP.name}
+              userId={session.user.id}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={{ background: C.bg, minHeight: "100vh", fontFamily: C.font, color: C.silver }}>
       <style>{`${GOOGLE_FONTS}*{box-sizing:border-box}@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}`}</style>
       <div style={{ maxWidth: 960, margin: "0 auto", padding: "0 20px 80px" }}>
-
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "24px 0 18px", borderBottom: `1px solid ${C.cyanBorder}`, marginBottom: 36 }}>
-          <div>
-            <div style={{ fontFamily: C.fontDisplay, fontSize: 20, fontWeight: 700, color: C.cyanBright, letterSpacing: "0.12em" }}>REVOLUTION INTELL</div>
-            <div style={{ fontFamily: C.fontMono, fontSize: 9, color: C.silverDim, letterSpacing: "0.2em", marginTop: 2 }}>TRM // TRUST & RISK MANAGEMENT PLATFORM v2.0</div>
-          </div>
-          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-            <span style={{ fontFamily: C.fontMono, fontSize: 9, color: C.silverDim }}>{session.user.email}</span>
-            {profile?.role === "admin" && <button style={hdrBtn(C.cyan)} onClick={() => setView("admin")}>ADMIN</button>}
-            <button style={hdrBtn()} onClick={() => setView("settings")}>SETTINGS</button>
-            <button style={hdrBtn("rgba(224,82,82,0.6)")} onClick={signOut}>SIGN OUT</button>
-          </div>
-        </div>
-
+        <Header />
         <div style={{ animation: "fadeUp 0.4s ease" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 28 }}>
             <div>
@@ -155,7 +248,7 @@ export default function App() {
           <div style={{ display: "grid", gap: 10 }}>
             {counterparties.map(cp => (
               <div key={cp.id} style={{ background: C.bg2, border: `1px solid ${cp.score ? scoreColor(cp.score) + "44" : C.cyanBorder}`, borderLeft: `3px solid ${cp.score ? scoreColor(cp.score) : C.cyanBorder}`, padding: "18px 20px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}
-                onClick={() => { setActiveCP(cp); setView("detail"); }}>
+                onClick={() => openCP(cp)}>
                 <div>
                   <div style={{ fontFamily: C.fontDisplay, fontSize: 18, fontWeight: 600, color: C.white, marginBottom: 4 }}>{cp.name}</div>
                   <div style={{ fontFamily: C.fontMono, fontSize: 9, color: C.silverDim, letterSpacing: "0.1em" }}>
