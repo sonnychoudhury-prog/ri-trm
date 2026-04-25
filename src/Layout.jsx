@@ -1,3 +1,4 @@
+import logo from "./assets/logo.png";
 import { C, GOOGLE_FONTS } from "./theme";
 
 
@@ -40,6 +41,7 @@ export default function Layout({ children, view, setView, profile, session, work
         {/* Logo */}
         <div style={{ padding: "24px 20px 20px", borderBottom: `1px solid ${C.cyanBorder}` }}>
           
+          <img src={logo} alt="Revolution Intell" style={{ height: 44, objectFit: "contain", marginBottom: 10, maxWidth: "100%", display: "block" }} />
           {companySettings?.logo_url && (
             <img src={companySettings.logo_url} style={{ height: 32, objectFit: "contain", marginBottom: 10, maxWidth: "100%" }} alt="logo"/>
           )}
