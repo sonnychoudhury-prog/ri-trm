@@ -12,6 +12,7 @@ import WorkflowPage from "./WorkflowPage";
 import CorrespondencePage from "./CorrespondencePage";
 import CompanySettings from "./CompanySettings";
 import Admin from "./Admin";
+import AISecurityPage from "./AISecurityPage";
 
 export default function App() {
   const [session, setSession] = useState(null);
@@ -188,6 +189,10 @@ export default function App() {
             setView("dashboard");
           }}
         />
+      )}
+
+      {view === "ai-security" && (
+        <AISecurityPage />
       )}
 
       {view === "documents" && (

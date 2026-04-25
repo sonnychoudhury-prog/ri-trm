@@ -1,5 +1,6 @@
 import { C, GOOGLE_FONTS } from "./theme";
 
+
 const NAV_ITEMS = [
   { key: "dashboard", label: "Dashboard", icon: "⬛" },
   { key: "counterparties", label: "Counterparties", icon: "◈" },
@@ -7,6 +8,7 @@ const NAV_ITEMS = [
   { key: "correspondence", label: "Correspondence", icon: "◇" },
   { key: "documents", label: "Documents", icon: "▣" },
   { key: "settings", label: "Settings", icon: "◉" },
+  { key: "ai-security", label: "AI Security Scan", icon: "⬡" },
 ];
 
 const ADMIN_ITEMS = [
@@ -37,6 +39,7 @@ export default function Layout({ children, view, setView, profile, session, work
 
         {/* Logo */}
         <div style={{ padding: "24px 20px 20px", borderBottom: `1px solid ${C.cyanBorder}` }}>
+          
           {companySettings?.logo_url && (
             <img src={companySettings.logo_url} style={{ height: 32, objectFit: "contain", marginBottom: 10, maxWidth: "100%" }} alt="logo"/>
           )}
