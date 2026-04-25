@@ -68,6 +68,7 @@ export default function CounterpartyDetail({ counterparty, assessment, session, 
         {profile?.role !== "restricted" && tabBtn("workflow", "DEAL WORKFLOW")}
         {profile?.role !== "restricted" && tabBtn("correspondence", "CORRESPONDENCE")}
         {profile?.role !== "restricted" && tabBtn("documents", "DOCUMENTS")}
+        {tabBtn("notes", "TEAM NOTES")}
       </div>
 
       {tab === "report" && (
