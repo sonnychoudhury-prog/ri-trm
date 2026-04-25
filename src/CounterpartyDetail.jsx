@@ -3,6 +3,7 @@ import { C } from "./theme";
 import Report from "./Report";
 import Workflow from "./Workflow";
 import Correspondence from "./Correspondence";
+import Notes from "./Notes";
 
 export default function CounterpartyDetail({ counterparty, assessment, session, profile, setView, onNewAssessment, onBack }) {
   const [tab, setTab] = useState("report");
@@ -90,6 +91,10 @@ export default function CounterpartyDetail({ counterparty, assessment, session, 
 
       {tab === "correspondence" && (
         <Correspondence counterpartyId={counterparty.id} counterpartyName={counterparty.name} userId={session.user.id} />
+      )}
+
+      {tab === "notes" && (
+        <Notes counterpartyId={counterparty.id} workspaceId={counterparty.workspace_id} userId={session.user.id} profile={profile} />
       )}
 
       {tab === "documents" && (
