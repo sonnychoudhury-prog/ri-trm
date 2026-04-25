@@ -21,14 +21,14 @@ export default function CounterpartyDetail({ counterparty, assessment, session, 
       border: "none",
       borderBottom: `2px solid ${tab === t ? C.cyan : "transparent"}`,
       color: tab === t ? C.cyan : C.silverDim,
-      fontFamily: C.fontMono, fontSize: 10, letterSpacing: "0.15em",
+      fontFamily: C.fontMono, fontSize: 13, letterSpacing: "0.15em",
       cursor: "pointer", whiteSpace: "nowrap"
     }}>{label}</button>
   );
 
   return (
     <div style={{ padding: "32px 36px", animation: "fadeUp 0.4s ease" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20, fontFamily: C.fontMono, fontSize: 9, color: C.silverDim, letterSpacing: "0.1em" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20, fontFamily: C.fontMono, fontSize: 12, color: C.silverDim, letterSpacing: "0.1em" }}>
         <span style={{ cursor: "pointer", color: C.cyan }} onClick={() => setView("dashboard")}>DASHBOARD</span>
         <span>&#8250;</span>
         <span style={{ cursor: "pointer", color: C.cyan }} onClick={() => setView("counterparties")}>COUNTERPARTIES</span>
@@ -50,7 +50,7 @@ export default function CounterpartyDetail({ counterparty, assessment, session, 
           {counterparty.score && (
             <div style={{ textAlign: "center", background: C.bg2, border: `1px solid ${scoreColor(counterparty.score)}44`, padding: "12px 20px" }}>
               <div style={{ fontFamily: C.fontDisplay, fontSize: 48, fontWeight: 700, color: scoreColor(counterparty.score), lineHeight: 1 }}>{counterparty.score}</div>
-              <div style={{ fontFamily: C.fontMono, fontSize: 8, color: C.silverDim, letterSpacing: "0.1em", marginTop: 4 }}>TRUST SCORE</div>
+              <div style={{ fontFamily: C.fontMono, fontSize: 11, color: C.silverDim, letterSpacing: "0.1em", marginTop: 4 }}>TRUST SCORE</div>
             </div>
           )}
           {profile?.role !== "restricted" && (

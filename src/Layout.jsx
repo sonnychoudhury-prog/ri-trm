@@ -23,7 +23,7 @@ export default function Layout({ children, view, setView, profile, session, work
     border: "none",
     borderLeft: `3px solid ${view === key ? C.cyan : "transparent"}`,
     color: view === key ? C.cyan : C.silverDim,
-    fontFamily: C.fontMono, fontSize: 10, letterSpacing: "0.12em",
+    fontFamily: C.fontMono, fontSize: 13, letterSpacing: "0.12em",
     transition: "all 0.15s",
   });
 
@@ -46,7 +46,7 @@ export default function Layout({ children, view, setView, profile, session, work
           <div style={{ fontFamily: C.fontDisplay, fontSize: 16, fontWeight: 700, color: C.cyanBright, letterSpacing: "0.1em", lineHeight: 1.2 }}>
             {companySettings?.company_name || workspace?.name || "REVOLUTION INTELL"}
           </div>
-          <div style={{ fontFamily: C.fontMono, fontSize: 8, color: C.silverDim, letterSpacing: "0.15em", marginTop: 4 }}>TRM PLATFORM v2.0</div>
+          <div style={{ fontFamily: C.fontMono, fontSize: 11, color: C.silverDim, letterSpacing: "0.15em", marginTop: 4 }}>TRM PLATFORM v2.0</div>
         </div>
 
         {/* Stats */}
@@ -54,18 +54,18 @@ export default function Layout({ children, view, setView, profile, session, work
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
             <div style={{ background: C.bg, border: `1px solid ${C.cyanBorder}`, padding: "10px 12px" }}>
               <div style={{ fontFamily: C.fontDisplay, fontSize: 22, fontWeight: 700, color: C.cyan }}>{counterparties?.length || 0}</div>
-              <div style={{ fontFamily: C.fontMono, fontSize: 8, color: C.silverDim, letterSpacing: "0.1em" }}>TOTAL</div>
+              <div style={{ fontFamily: C.fontMono, fontSize: 11, color: C.silverDim, letterSpacing: "0.1em" }}>TOTAL</div>
             </div>
             <div style={{ background: C.bg, border: `1px solid ${C.cyanBorder}`, padding: "10px 12px" }}>
               <div style={{ fontFamily: C.fontDisplay, fontSize: 22, fontWeight: 700, color: avgScore >= 80 ? C.safe : avgScore >= 40 ? C.warn : C.danger }}>{avgScore || "—"}</div>
-              <div style={{ fontFamily: C.fontMono, fontSize: 8, color: C.silverDim, letterSpacing: "0.1em" }}>AVG SCORE</div>
+              <div style={{ fontFamily: C.fontMono, fontSize: 11, color: C.silverDim, letterSpacing: "0.1em" }}>AVG SCORE</div>
             </div>
           </div>
         </div>
 
         {/* Navigation */}
         <nav style={{ flex: 1, padding: "12px 0" }}>
-          <div style={{ fontFamily: C.fontMono, fontSize: 8, color: C.silverDim, letterSpacing: "0.2em", padding: "8px 20px 4px", textTransform: "uppercase" }}>MAIN</div>
+          <div style={{ fontFamily: C.fontMono, fontSize: 11, color: C.silverDim, letterSpacing: "0.2em", padding: "8px 20px 4px", textTransform: "uppercase" }}>MAIN</div>
           {NAV_ITEMS.filter(item => {
             if (item.key === "settings" && profile?.role === "restricted") return false;
             return true;
@@ -78,7 +78,7 @@ export default function Layout({ children, view, setView, profile, session, work
 
           {isSuperAdmin && (
             <>
-              <div style={{ fontFamily: C.fontMono, fontSize: 8, color: C.silverDim, letterSpacing: "0.2em", padding: "16px 20px 4px", textTransform: "uppercase" }}>PLATFORM</div>
+              <div style={{ fontFamily: C.fontMono, fontSize: 11, color: C.silverDim, letterSpacing: "0.2em", padding: "16px 20px 4px", textTransform: "uppercase" }}>PLATFORM</div>
               {ADMIN_ITEMS.map(item => (
                 <button key={item.key} style={navBtn(item.key)} onClick={() => setView(item.key)}>
                   <span style={{ fontSize: 12 }}>{item.icon}</span>
@@ -91,10 +91,10 @@ export default function Layout({ children, view, setView, profile, session, work
 
         {/* User */}
         <div style={{ padding: "16px 20px", borderTop: `1px solid ${C.cyanBorder}` }}>
-          <div style={{ fontFamily: C.fontMono, fontSize: 9, color: C.silverDim, letterSpacing: "0.08em", marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{session?.user?.email}</div>
+          <div style={{ fontFamily: C.fontMono, fontSize: 12, color: C.silverDim, letterSpacing: "0.08em", marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{session?.user?.email}</div>
           <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
-            <span style={{ fontFamily: C.fontMono, fontSize: 8, padding: "2px 8px", border: `1px solid ${profile?.role === "admin" ? C.cyan : C.silverDim}`, color: profile?.role === "admin" ? C.cyan : C.silverDim, letterSpacing: "0.1em" }}>{(profile?.role || "user").toUpperCase()}</span>
-            <button style={{ padding: "2px 10px", background: "transparent", border: "1px solid rgba(224,82,82,0.4)", color: "rgba(224,82,82,0.7)", fontFamily: C.fontMono, fontSize: 8, letterSpacing: "0.1em", cursor: "pointer" }} onClick={onSignOut}>SIGN OUT</button>
+            <span style={{ fontFamily: C.fontMono, fontSize: 11, padding: "2px 8px", border: `1px solid ${profile?.role === "admin" ? C.cyan : C.silverDim}`, color: profile?.role === "admin" ? C.cyan : C.silverDim, letterSpacing: "0.1em" }}>{(profile?.role || "user").toUpperCase()}</span>
+            <button style={{ padding: "2px 10px", background: "transparent", border: "1px solid rgba(224,82,82,0.4)", color: "rgba(224,82,82,0.7)", fontFamily: C.fontMono, fontSize: 14, letterSpacing: "0.1em", cursor: "pointer" }} onClick={onSignOut}>SIGN OUT</button>
           </div>
         </div>
       </div>

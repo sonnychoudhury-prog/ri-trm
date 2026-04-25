@@ -96,14 +96,14 @@ export default function CounterpartiesList({ counterparties, setView, setActiveC
             <div style={{ flex: 1 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
                 <div style={{ fontFamily: C.fontDisplay, fontSize: 17, fontWeight: 600, color: C.white }}>{cp.name}</div>
-                {cp.score && <span style={{ fontFamily: C.fontMono, fontSize: 8, padding: "2px 8px", border: `1px solid ${scoreColor(cp.score)}`, color: scoreColor(cp.score), background: scoreColor(cp.score) + "22", letterSpacing: "0.1em" }}>{verdictLabel(cp.score)}</span>}
-                {!cp.score && <span style={{ fontFamily: C.fontMono, fontSize: 8, padding: "2px 8px", border: `1px solid ${C.silverDim}`, color: C.silverDim, letterSpacing: "0.1em" }}>UNASSESSED</span>}
+                {cp.score && <span style={{ fontFamily: C.fontMono, fontSize: 11, padding: "2px 8px", border: `1px solid ${scoreColor(cp.score)}`, color: scoreColor(cp.score), background: scoreColor(cp.score) + "22", letterSpacing: "0.1em" }}>{verdictLabel(cp.score)}</span>}
+                {!cp.score && <span style={{ fontFamily: C.fontMono, fontSize: 11, padding: "2px 8px", border: `1px solid ${C.silverDim}`, color: C.silverDim, letterSpacing: "0.1em" }}>UNASSESSED</span>}
               </div>
               <div style={{ display: "flex", gap: 16 }}>
-                {cp.country && <span style={{ fontFamily: C.fontMono, fontSize: 9, color: C.silverDim, letterSpacing: "0.08em" }}>&#127758; {cp.country}</span>}
-                {cp.tx_type && <span style={{ fontFamily: C.fontMono, fontSize: 9, color: C.silverDim, letterSpacing: "0.08em" }}>&#9670; {cp.tx_type}</span>}
-                {cp.tx_value && <span style={{ fontFamily: C.fontMono, fontSize: 9, color: C.silverDim, letterSpacing: "0.08em" }}>&#36; {cp.tx_value}</span>}
-                <span style={{ fontFamily: C.fontMono, fontSize: 9, color: C.silverDim, letterSpacing: "0.08em" }}>Updated {new Date(cp.updated_at).toLocaleDateString()}</span>
+                {cp.country && <span style={{ fontFamily: C.fontMono, fontSize: 12, color: C.silverDim, letterSpacing: "0.08em" }}>&#127758; {cp.country}</span>}
+                {cp.tx_type && <span style={{ fontFamily: C.fontMono, fontSize: 12, color: C.silverDim, letterSpacing: "0.08em" }}>&#9670; {cp.tx_type}</span>}
+                {cp.tx_value && <span style={{ fontFamily: C.fontMono, fontSize: 12, color: C.silverDim, letterSpacing: "0.08em" }}>&#36; {cp.tx_value}</span>}
+                <span style={{ fontFamily: C.fontMono, fontSize: 12, color: C.silverDim, letterSpacing: "0.08em" }}>Updated {new Date(cp.updated_at).toLocaleDateString()}</span>
               </div>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 20, flexShrink: 0, marginLeft: 20 }}>

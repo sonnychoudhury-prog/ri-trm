@@ -24,9 +24,9 @@ export default function Dashboard({ counterparties, profile, companySettings, wo
 
   const statCard = (label, value, color, sub) => (
     <div style={{ background: C.bg2, border: `1px solid ${C.cyanBorder}`, padding: "20px 24px" }}>
-      <div style={{ fontFamily: C.fontMono, fontSize: 9, color: C.silverDim, letterSpacing: "0.15em", marginBottom: 8 }}>{label}</div>
+      <div style={{ fontFamily: C.fontMono, fontSize: 12, color: C.silverDim, letterSpacing: "0.15em", marginBottom: 8 }}>{label}</div>
       <div style={{ fontFamily: C.fontDisplay, fontSize: 42, fontWeight: 700, color: color || C.cyan, lineHeight: 1 }}>{value}</div>
-      {sub && <div style={{ fontFamily: C.fontMono, fontSize: 8, color: C.silverDim, letterSpacing: "0.1em", marginTop: 6 }}>{sub}</div>}
+      {sub && <div style={{ fontFamily: C.fontMono, fontSize: 11, color: C.silverDim, letterSpacing: "0.1em", marginTop: 6 }}>{sub}</div>}
     </div>
   );
 
@@ -60,14 +60,14 @@ export default function Dashboard({ counterparties, profile, companySettings, wo
               onClick={() => { setActiveCP(cp); setView("counterparty-detail"); }}>
               <div>
                 <div style={{ fontSize: 13, fontWeight: 500, color: C.white, marginBottom: 2 }}>{cp.name}</div>
-                <div style={{ fontFamily: C.fontMono, fontSize: 8, color: C.silverDim, letterSpacing: "0.08em" }}>{cp.tx_type || "No transaction type"} // {new Date(cp.updated_at).toLocaleDateString()}</div>
+                <div style={{ fontFamily: C.fontMono, fontSize: 11, color: C.silverDim, letterSpacing: "0.08em" }}>{cp.tx_type || "No transaction type"} // {new Date(cp.updated_at).toLocaleDateString()}</div>
               </div>
               {cp.score && (
                 <div style={{ fontFamily: C.fontDisplay, fontSize: 20, fontWeight: 700, color: scoreColor(cp.score) }}>{cp.score}</div>
               )}
             </div>
           ))}
-          <button style={{ marginTop: 16, padding: "8px 16px", background: "transparent", border: `1px solid ${C.cyanBorder}`, color: C.cyan, fontFamily: C.fontMono, fontSize: 9, letterSpacing: "0.15em", cursor: "pointer", width: "100%" }}
+          <button style={{ marginTop: 16, padding: "8px 16px", background: "transparent", border: `1px solid ${C.cyanBorder}`, color: C.cyan, fontFamily: C.fontMono, fontSize: 12, letterSpacing: "0.15em", cursor: "pointer", width: "100%" }}
             onClick={() => setView("counterparties")}>VIEW ALL COUNTERPARTIES</button>
         </div>
 
@@ -84,8 +84,8 @@ export default function Dashboard({ counterparties, profile, companySettings, wo
           ].map(item => (
             <div key={item.label} style={{ marginBottom: 14 }}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
-                <span style={{ fontFamily: C.fontMono, fontSize: 9, color: item.color, letterSpacing: "0.1em" }}>{item.label}</span>
-                <span style={{ fontFamily: C.fontMono, fontSize: 9, color: item.color }}>{item.count}</span>
+                <span style={{ fontFamily: C.fontMono, fontSize: 12, color: item.color, letterSpacing: "0.1em" }}>{item.label}</span>
+                <span style={{ fontFamily: C.fontMono, fontSize: 12, color: item.color }}>{item.count}</span>
               </div>
               <div style={{ height: 4, background: "rgba(210,221,225,0.08)" }}>
                 <div style={{ height: "100%", width: assessed.length ? `${(item.count / assessed.length) * 100}%` : "0%", background: item.color, transition: "width 1s ease" }}/>
@@ -99,7 +99,7 @@ export default function Dashboard({ counterparties, profile, companySettings, wo
               onClick={() => setView("assessment")}>
               + NEW COUNTERPARTY ASSESSMENT
             </button>
-            <button style={{ width: "100%", padding: "10px", background: "transparent", border: `1px solid ${C.cyanBorder}`, color: C.silverDim, fontFamily: C.fontMono, fontSize: 9, letterSpacing: "0.15em", cursor: "pointer" }}
+            <button style={{ width: "100%", padding: "10px", background: "transparent", border: `1px solid ${C.cyanBorder}`, color: C.silverDim, fontFamily: C.fontMono, fontSize: 12, letterSpacing: "0.15em", cursor: "pointer" }}
               onClick={() => setView("workflow")}>
               VIEW DEAL PIPELINE
             </button>
