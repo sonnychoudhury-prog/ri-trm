@@ -41,7 +41,7 @@ export default function Layout({ children, view, setView, profile, session, work
         {/* Logo */}
         <div style={{ padding: "24px 20px 20px", borderBottom: `1px solid ${C.cyanBorder}` }}>
           
-          <img src={logo} alt="Revolution Intell" style={{ height: 44, objectFit: "contain", marginBottom: 10, maxWidth: "100%", display: "block" }} />
+          <img src={logo} alt="Revolution Intell" style={{ height: 60, objectFit: "contain", marginBottom: 12, maxWidth: "200px", display: "block", borderRadius: 4 }} />
           {companySettings?.logo_url && (
             <img src={companySettings.logo_url} style={{ height: 32, objectFit: "contain", marginBottom: 10, maxWidth: "100%" }} alt="logo"/>
           )}
